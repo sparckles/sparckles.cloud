@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      sparckles.cloud - The easiest way to deploy python web applications
+    </title>
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="main.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Use the font as lato */
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        font-family: "Lato", Arial, Helvetica, sans-serif;
+        letter-spacing: 2px;
+      }
+
+      .carousel {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .carousel-item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transition: opacity 1s;
+      }
+
+      .carousel-item.active {
+        opacity: 1;
+      }
+
+      .main {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .main-heading {
+        font-family: "Libre Franklin", sans-serif;
+        font-size: 8rem; /* 96px */
+        line-height: 1;
+      }
+
+      @media (max-width: 1200px) {
+        .main-heading {
+          font-size: 4rem; /* 64px */
+        }
+      }
+
+      @media (max-width: 768px) {
+        .main-heading {
+          font-size: 3rem; /* 48px */
+        }
+      }
+
+      @media (max-width: 480px) {
+        .main-heading {
+          font-size: 2rem; /* 32px */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="carousel" class="carousel">
+      <div
+        class="carousel-item"
+        style="
+          background-image: linear-gradient(
+              rgba(255, 255, 255, 0.25) 0%,
+              rgba(255, 255, 255, 0.25) 100%
+            ),
+            url('/assets/image1.webp');
+        "
+      ></div>
+      <div
+        class="carousel-item"
+        style="
+          background-image: linear-gradient(
+              rgba(255, 255, 255, 0.25) 0%,
+              rgba(255, 255, 255, 0.25) 100%
+            ),
+            url('/assets/image2.webp');
+        "
+      ></div>
+    </div>
+
+    <div class="main">
+      <div
+        class="h-screen flex flex-col justify-between items-center space-y-36 py-10"
+      >
+        <!-- Create a layout with everything centered in the middle using tailwind-->
+
+        <p class="text-2xl">SPARCKLES.cloud</p>
+
+        <div class="flex flex-col justify-between items-center space-y-10">
+          <div class="flex flex-col justify-between items-center">
+            <h1 class="main-heading">Great things coming</h1>
+            <h1 class="main-heading">soon.</h1>
+          </div>
+          <div class="items-center flex-col justify-content text-center">
+            <p class="text-md sm:text-lg md:text-xl lg:text-2xl">
+              Easiest way to deploy
+            </p>
+            <p class="text-md sm:text-lg md:text-xl lg:text-2xl">
+              Python web applications.
+            </p>
+          </div>
+          <a
+            class="bg-transparent text-black border-2 border-black hover:bg-black hover:text-white font-bold py-2 px-4 rounded"
+            href="https://www.github.com/sparckles"
+            target="_blank"
+          >
+            Learn More
+          </a>
+        </div>
+
+        <div class="pb-14 flex-col items-center justify-center">
+          <form
+            name="contact"
+            method="POST"
+            data-netilfy="true"
+            class="flex flex-col sm:flex-row items-center sm:space-x-4 space-y-4 sm:space-y-0"
+            netlify
+          >
+            <p class="text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-4xl">
+              Subscribe
+            </p>
+
+            <div>
+              <input
+                class="border-2 border-gray-300 bg-white h-12 sm:h-16 w-96 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+                type="email"
+                name="email"
+                style="width: min(60vw, 1200px)"
+                placeholder="Email"
+              />
+            </div>
+            <button
+              class="bg-transparent text-black border-2 border-black hover:bg-black hover:text-white font-bold py-2 px-4 rounded"
+              type="submit"
+            >
+              Subscribe
+            </button>
+          </form>
+          <p class="text-sm text-gray-500 text-center">
+            To get the latest updates.
+          </p>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function () {
+        let carouselItems = document.querySelectorAll(".carousel-item");
+        let currentIndex = 0;
+
+        function nextItem() {
+          carouselItems[currentIndex].classList.remove("active");
+          currentIndex = (currentIndex + 1) % carouselItems.length;
+          carouselItems[currentIndex].classList.add("active");
+        }
+
+        carouselItems[currentIndex].classList.add("active");
+        setInterval(nextItem, 2000); // Change images every 2 seconds
+      })();
+    </script>
+  </body>
+</html>
