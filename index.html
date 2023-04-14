@@ -19,78 +19,7 @@
       href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
-
-    <style>
-      /* Use the font as lato */
-      body,
-      html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        width: 100%;
-        font-family: "Lato", Arial, Helvetica, sans-serif;
-        letter-spacing: 2px;
-      }
-
-      .carousel {
-        position: relative;
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-      }
-
-      .carousel-item {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        opacity: 0;
-        transition: opacity 1s;
-      }
-
-      .carousel-item.active {
-        opacity: 1;
-      }
-
-      .main {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        color: black;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .main-heading {
-        font-family: "Libre Franklin", sans-serif;
-        font-size: 8rem; /* 96px */
-        line-height: 1;
-      }
-
-      @media (max-width: 1200px) {
-        .main-heading {
-          font-size: 4rem; /* 64px */
-        }
-      }
-
-      @media (max-width: 768px) {
-        .main-heading {
-          font-size: 3rem; /* 48px */
-        }
-      }
-
-      @media (max-width: 480px) {
-        .main-heading {
-          font-size: 2rem; /* 32px */
-        }
-      }
-    </style>
+    <link href="./style.css" rel="stylesheet" />
   </head>
   <body>
     <div id="carousel" class="carousel">
@@ -174,9 +103,41 @@
               Subscribe
             </button>
           </form>
+
           <p class="text-sm text-gray-500 text-center">
             To get the latest updates.
           </p>
+          <div
+            id="success"
+            class="bg-green-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 relative"
+            role="alert"
+          >
+            <strong class="font-bold">Thank you!</strong>
+            <span class="font-bold block sm:inline">
+              We will keep you updated with the awesomeness.
+            </span>
+            <span
+              class="close absolute top-0 bottom-0 right-0 px-4 py-3"
+              id="close-button"
+              >&times;</span
+            >
+          </div>
+
+          <div
+            id="wrong-email"
+            class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
+            <strong class="font-bold">Holy smokes!</strong>
+            <span class="font-bold block sm:inline"
+              >Something wrong with the email input.</span
+            >
+            <span
+              class="close absolute top-0 bottom-0 right-0 px-4 py-3"
+              id="wrong-email-close"
+              >&times;</span
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -194,6 +155,43 @@
         carouselItems[currentIndex].classList.add("active");
         setInterval(nextItem, 2000); // Change images every 2 seconds
       })();
+      const success = document.getElementById("success");
+      success.style.display = "none";
+
+      const wrongEmail = document.getElementById("wrong-email");
+      wrongEmail.style.display = "none";
+      const wrongEmailClose = document.getElementById("wrong-email-close");
+      wrongEmailClose.addEventListener("click", () => {
+        wrongEmail.style.display = "none";
+      });
+
+      const close = document.getElementById("close-button");
+      close.addEventListener("click", () => {
+        success.style.display = "none";
+      });
+
+      const form = document.querySelector("form");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = form.email.value;
+        const formData = new FormData(e.target);
+
+        if (email.includes("@")) {
+          fetch("/", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(formData).toString(),
+          })
+            .then(() => {
+              success.style.display = "block";
+            })
+            .catch((error) => {
+              alert(error);
+            });
+        } else {
+          wrongEmail.style.display = "block";
+        }
+      });
     </script>
   </body>
 </html>
